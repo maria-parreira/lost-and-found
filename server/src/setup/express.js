@@ -5,7 +5,7 @@
 
 let helmet = require('helmet');
 let methodOverride = require('method-override');
-let express = require('express');
+let express = require('server/src/setup/express');
 
 module.exports = setup;
 

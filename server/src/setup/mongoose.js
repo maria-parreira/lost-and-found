@@ -3,7 +3,7 @@
 */
 'use strict';
 
-let mongoose = require('mongoose');
+let mongoose = require('server/src/setup/mongoose');
 const DATABASE_URL = 'mongodb://127.0.0.1:27017/AirportAI-exercise';
 
 
