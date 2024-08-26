@@ -3,13 +3,11 @@
 */
 'use strict';
 
-let mongoose = require('server/src/setup/mongoose');
-const DATABASE_URL = 'mongodb://127.0.0.1:27017/AirportAI-exercise';
-
+let mongoose = require('mongoose');
+const logger = require('pino')()
 
 module.exports = (async function() {
-
-  const DATABASE_URL = process.env.DATABASE_URI;
+  const DATABASE_URL = 'mongodb://127.0.0.1:27017/AirportAI-exercise';
 
   if (!DATABASE_URL) {
     throw new Error('DATABASE_URL is not set');
