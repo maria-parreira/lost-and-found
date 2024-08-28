@@ -16,9 +16,6 @@ A list of rough steps in priority order:
 
 ## Setup
 
-### Requirements
-Make sure you have MongoDB installed and running on your computer as well as NodeJS/NPM installed.
-
 ### Steps
 On the root of this app, run the following command to install dependencies:
 ```
@@ -32,9 +29,35 @@ npm start
 
 If everything is ok, you should see a 'Hello world!' message when you go to 'http://localhost:3000' on your browser.
 
-## Set Up mongodb
 
-command brew install mongosh
+### Install MongoDB Locally
+
+- If you haven't installed MongoDB yet, you'll need to install it on your system. 
+- You can download it from the official MongoDB website: [MongoDB Download Center](https://www.mongodb.com/try/download/community)
+
+- If you installed MongoDB using Homebrew, run the following command:
+- is a straightforward way to start the MongoDB server and ensure it continues running in the background. 
+- Without starting the MongoDB service, your application wouldn’t be able to connect to the database since MongoDB wouldn't be running.
+```
 brew services start mongodb-community
-instalar a partir do site para ter o servidor a correr localmente
+```
+
+- Also you need to add this dependencies in [mongoose.js setup file](server/src/setup/mongoose.js):
+- Mongoose: Used for interacting with MongoDB, mongoose is an object data modeling (ODM) library that provides a straightforward schema-based solution to model your application data. It simplifies common tasks such as creating, reading, updating, and deleting documents in MongoDB.
+- Pino: A fast and low-overhead logging library for Node.js. pino is used for structured logging, helping to track and debug application behavior efficiently by generating logs in a JSON format.
+```
+let mongoose = require('mongoose');
+const logger = require('pino')()
+```
+- To install mongoose and pino run this commands:
+```
 npm install mongoose
+npm install pino
+```
+
+## What is MongoDB?
+
+- MongoDB is a NoSQL database, meaning it doesn't use the traditional table-based relational database structure. 
+- Instead, it stores data in flexible, JSON-like documents, which allows for more dynamic and scalable data storage.
+- It’s particularly popular for handling large volumes of unstructured or semi-structured data. 
+- It’s commonly used in web applications, mobile apps, content management systems, and real-time analytics.
