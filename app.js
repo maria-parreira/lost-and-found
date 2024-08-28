@@ -1,6 +1,6 @@
 /**
-* App entrypoint.
-*/
+ * App entrypoint.
+ */
 'use strict';
 
 let app = require('express')();
@@ -10,10 +10,9 @@ const PORT = 3000;
 require('./server/src/setup/express')(app);
 
 // Set up MongoDB.
-require('./server/src/setup/mongoose')();
+require('./server/src/setup/mongoose');
 
-// Set up routes.
-app.use('/', require('./server/src/routes'));
+
 
 // Start app.
 app.listen(PORT, function() {

@@ -32,3 +32,9 @@ npm start
 
 If everything is ok, you should see a 'Hello world!' message when you go to 'http://localhost:3000' on your browser.
 
+## Set Up mongodb
+
+command brew install mongosh
+brew services start mongodb-community
+instalar a partir do site para ter o servidor a correr localmente
+npm install mongoose

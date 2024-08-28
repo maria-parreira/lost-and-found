@@ -3,8 +3,7 @@ const LostItemController = require('../controllers/LostItemController');
 
 const router = express.Router();
 
-// Rota para listar todos os itens perdidos
 router.get('/api/lost-items', LostItemController.getAll);
-
+router.get('/api/lost-items/:id', LostItemController.getById);
 
 module.exports = router;
