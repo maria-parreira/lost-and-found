@@ -33,7 +33,7 @@ class AgentController {
     static async login(req, res) {
         const { email, password } = req.body;
         try {
-            // verify if user already exists
+            // verify if agent already exists
             const agent = await Agent.findOne({ email });
 
             if (agent && (await agent.matchPassword(password))) {

@@ -2,6 +2,7 @@
 
 This repository includes a NodeJS / Express / MongoDB  application.
 
+
 **The idea is to prototype a Lost and Found system for an airport to be used as a REST API, where agents (people who work in airport) can manage lost products and passengers can search for their lost items.**
 **An agent at the airport is able to list / create and delete products from the system, while a passenger is able to report his loss (e.g. by describing the product).**
 
@@ -14,7 +15,10 @@ A list of rough steps in priority order:
 - postman collection to interact with the API;
 
 
-## Setup
+### Creating a REST API with Node.js involves several key steps. Here’s a high-level overview:
+
+
+## Setup Project
 
 ### Steps
 On the root of this app, run the following command to install dependencies:
@@ -33,47 +37,53 @@ npm start
 - You can download it from the official MongoDB website: [MongoDB Download Center](https://www.mongodb.com/try/download/community)
 
 - If you installed MongoDB using Homebrew, run the following command:
-- is a straightforward way to start the MongoDB server and ensure it continues running in the background. 
-- Without starting the MongoDB service, your application wouldn’t be able to connect to the database since MongoDB wouldn't be running.
 ```
 brew services start mongodb-community
 ```
+- is a straightforward way to start the MongoDB server and ensure it continues running in the background.
+- Without starting the MongoDB service, your application wouldn’t be able to connect to the database since MongoDB wouldn't be running.
 
 - Also you need to add this dependencies in [mongoose.js setup file](server/src/setup/mongoose.js):
-- Mongoose: Used for interacting with MongoDB, mongoose is an object data modeling (ODM) library that provides a straightforward schema-based solution to model your application data. It simplifies common tasks such as creating, reading, updating, and deleting documents in MongoDB.
+- Mongoose: Used for interacting with MongoDB, it is an object data modeling (ODM) library that provides a straightforward schema-based solution to model your application data. It simplifies common tasks such as creating, reading, updating, and deleting documents in MongoDB.
 - Pino: A fast and low-overhead logging library for Node.js. pino is used for structured logging, helping to track and debug application behavior efficiently by generating logs in a JSON format.
 ```
 let mongoose = require('mongoose');
 const logger = require('pino')()
 ```
-- To install mongoose and pino run this commands:
+
+- To install mongoose and pino run these commands:
 ```
 npm install mongoose
 npm install pino
 ```
 
-## What is MongoDB?
-
-- MongoDB is a non-relational database, meaning it doesn't use the traditional table-based relational database structure. 
-- Instead, it stores data in flexible, JSON-like documents, which allows for more dynamic and scalable data storage.
-- It’s particularly popular for handling large volumes of unstructured or semi-structured data. 
-- It’s commonly used in web applications, mobile apps, content management systems, and real-time analytics.
-
-
-The command installs packages for password hashing, JWT management, and web server creation in a Node.js project:
+- For password hashing, JWT management, and web server creation in a Node.js project, run this command:
 ```bash
 npm install bcryptjs jsonwebtoken express
 ```
 
-To set up your testing environment, install Jest and Supertest as development dependencies with the command:
+- Set up an Express server to handle HTTP requests. This involves creating an instance of an Express app and defining routes.You can check it [here](server/src/setup/express.js).
+
+- Create endpoints for your API by defining routes. Routes correspond to specific URLs and HTTP methods (GET, POST, PUT, DELETE, etc.).You can check it [here](server/src/routes).
+
+
+## Tests
+
+- Use tools like Postman to test your API endpoints. 
+- You can also write automated tests with frameworks like Jest.
+
+- To set up your testing environment, install Jest and Supertest as development dependencies with the command:
 ```bash
 npm install --save-dev jest supertest
 ```
 
-To configure Jest, add a test script to your package.json with the following entry: 
+- To configure Jest, add a test script to your package.json with the following entry:
 ```bash
 "scripts": 
 { 
   "test": "jest" 
 }
 ```
+
+
+## My results
