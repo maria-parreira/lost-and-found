@@ -1,7 +1,4 @@
-// This controller will be responsible for handle received requests
-
-
-const LostItem = require('../models/LostItem'); //importing the LostItem model into the current file
+const LostItem = require('../models/LostItem');
 
 class LostItemController {
 
@@ -11,7 +8,7 @@ class LostItemController {
             const items = await LostItem.find();
             res.status(200).json(items);
         } catch (error) {
-            res.status(500).json({error: 'Error fetching lost items'});
+            res.status(500).json({ error: 'Error fetching lost items' });
         }
     }
 
@@ -22,12 +19,34 @@ class LostItemController {
             const item = await LostItem.findById(id);
 
             if (!item) {
-                return res.status(404).json({error: 'Lost item not found'});
+                return res.status(404).json({ error: 'Lost item not found' });
             }
 
             res.status(200).json(item);
         } catch (error) {
-            res.status(500).json({error: 'Error fetching the lost item'});
+            res.status(500).json({ error: 'Error fetching the lost item' });
+        }
+    }
+
+    // POST /api/lost-items
+    static async create(req, res) {
+        try {
+            const { description, foundDate, location, status } = req.body;
+
+            if (!description || !foundDate || !location || !status) {
+                return res.status(400).json({ error: 'Please provide all required fields' });
+            }
+            const newItem = new LostItem({
+                description,
+                foundDate,
+                location,
+                status
+            });
+            const savedItem = await newItem.save();
+
+            res.status(201).json(savedItem);
+        } catch (error) {
+            res.status(500).json({ error: 'Error creating the lost item' });
         }
     }
 }

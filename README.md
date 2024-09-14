@@ -57,7 +57,7 @@ npm install pino
 
 ## What is MongoDB?
 
-- MongoDB is a NoSQL database, meaning it doesn't use the traditional table-based relational database structure. 
+- MongoDB is a non-relational database, meaning it doesn't use the traditional table-based relational database structure. 
 - Instead, it stores data in flexible, JSON-like documents, which allows for more dynamic and scalable data storage.
 - It’s particularly popular for handling large volumes of unstructured or semi-structured data. 
 - It’s commonly used in web applications, mobile apps, content management systems, and real-time analytics.
