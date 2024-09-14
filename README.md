@@ -1,8 +1,8 @@
 # Lost-and-found
 
-This repository includes a NodeJS / Express / MongoDB skeleton app.
+This repository includes a NodeJS / Express / MongoDB  application.
 
-**The idea is to prototype a Lost and Found system for an airport to be used as a REST API, where we can manage and search for lost products.**
+**The idea is to prototype a Lost and Found system for an airport to be used as a REST API, where agents (people who work in airport) can manage lost products and passengers can search for their lost items.**
 **An agent at the airport is able to list / create and delete products from the system, while a passenger is able to report his loss (e.g. by describing the product).**
 
 A list of rough steps in priority order:
@@ -26,9 +26,6 @@ On the root of this app, run the following command to run the application:
 ```
 npm start
 ```
-
-If everything is ok, you should see a 'Hello world!' message when you go to 'http://localhost:3000' on your browser.
-
 
 ### Install MongoDB Locally
 
@@ -61,3 +58,22 @@ npm install pino
 - Instead, it stores data in flexible, JSON-like documents, which allows for more dynamic and scalable data storage.
 - It’s particularly popular for handling large volumes of unstructured or semi-structured data. 
 - It’s commonly used in web applications, mobile apps, content management systems, and real-time analytics.
+
+
+The command installs packages for password hashing, JWT management, and web server creation in a Node.js project:
+```bash
+npm install bcryptjs jsonwebtoken express
+```
+
+To set up your testing environment, install Jest and Supertest as development dependencies with the command:
+```bash
+npm install --save-dev jest supertest
+```
+
+To configure Jest, add a test script to your package.json with the following entry: 
+```bash
+"scripts": 
+{ 
+  "test": "jest" 
+}
+```
