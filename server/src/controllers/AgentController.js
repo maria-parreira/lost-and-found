@@ -5,7 +5,7 @@ class AgentController {
 
     // POST /api/agents/register
     static async register(req, res) {
-        const { name, email, password } = req.body;
+        const { username, email, password } = req.body;
         try {
             // verify if email already exists
             const agentExists = await Agent.findOne({ email });
@@ -14,13 +14,13 @@ class AgentController {
             }
 
             // create new user
-            const agent = await Agent.create({ name, email, password });
+            const agent = await Agent.create({ username, email, password });
 
             // cerate token JWT
             const token = AgentController.generateToken(agent._id);
             res.status(201).json({
                 _id: agent._id,
-                name: agent.name,
+                username: agent.username,
                 email: agent.email,
                 token
             });
@@ -41,7 +41,7 @@ class AgentController {
                 const token = AgentController.generateToken(agent._id);
                 res.json({
                     _id: agent._id,
-                    name: agent.name,
+                    username: agent.username,
                     email: agent.email,
                     token
                 });
