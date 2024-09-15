@@ -2,7 +2,7 @@
 
 ## Introduction 
 
-The Lost and Found Management System is a system designed to manage lost and found items within an airport. 
+The Lost and Found project is a system designed to manage lost and found items within an airport. 
 The system allows two distinct types of users: agents and passengers. 
 Agents have the ability to list, create, and delete lost items,  while a passenger is able to report his loss (e.g. by describing the product).
 
