@@ -3,7 +3,7 @@ const LostItem = require('../models/LostItem');
 class LostItemController {
 
     // GET /api/lost-items
-    static async getAll(req, res) {
+    static async getAllLostItems(req, res) {
         try {
             const items = await LostItem.find();
             res.status(200).json(items);
@@ -13,7 +13,7 @@ class LostItemController {
     }
 
     // GET /api/lost-items/:id
-    static async getById(req, res) {
+    static async getByItemById(req, res) {
         try {
             const id = req.params.id;
             const item = await LostItem.findById(id);
