@@ -6,7 +6,7 @@ const { protect, authorizeAgent } = require('../middleware/authMiddleware');
 
 
 router.get('/api/lost-items',protect, authorizeAgent, LostItemController.getAllLostItems);
-router.get('/api/lost-items/:id',protect, authorizeAgent, LostItemController.getById);
-router.post('/api/lost-items', protect, authorizeAgent,LostItemController.create);
+router.get('/api/lost-items/:id',protect, authorizeAgent, LostItemController.getByItemById);
+router.post('/api/lost-items', protect, authorizeAgent,LostItemController.createLostItem);
 
 module.exports = router;

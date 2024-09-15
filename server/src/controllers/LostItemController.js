@@ -29,7 +29,7 @@ class LostItemController {
     }
 
     // POST /api/lost-items
-    static async create(req, res) {
+    static async createLostItem(req, res) {
         try {
             const { description, foundDate, location, status } = req.body;
 

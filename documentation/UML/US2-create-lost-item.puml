@@ -1,0 +1,33 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+title US2: As an agent, I want to create a lost item
+
+
+[o-> "routes": post('/api/lost-items', protect, authorizeAgent,LostItemController.createLostItem);
+activate "routes"
+"routes" -> "authMiddleware": protect = async (req, res, next)
+note right
+  Verify token,
+   if ok return next
+end note
+activate "authMiddleware"
+ "authMiddleware" --> "routes" : next()
+"routes" -> "authMiddleware": authorizeAgent = async (req, res, next)
+note right
+  Verify agent,
+   if ok return next
+end note
+ "authMiddleware" --> "routes" : next()
+deactivate "authMiddleware"
+
+"routes" -> "LostItemController": createLostItem { description, foundDate, location, status }
+activate "LostItemController"
+"LostItemController" --> "LostItemController" : newItem
+deactivate "routes"
+"LostItemController" -> "Database": newItem.save()
+activate "Database"
+"Database" --> "LostItemController" : status(201) + json(savedItem)
+[o<-- "LostItemController" : status(201) + json(savedItem)
+
+@enduml
