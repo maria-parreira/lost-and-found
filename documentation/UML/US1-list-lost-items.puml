@@ -1,0 +1,32 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+title US1: As an agent, I want to list all lost items
+
+
+[o-> "routes": get('/api/lost-items',protect, authorizeAgent, LostItemController.getAllLostItems)
+activate "routes"
+"routes" -> "authMiddleware": protect = async (req, res, next)
+note right
+  Verify token,
+   if ok return next
+end note
+activate "authMiddleware"
+ "authMiddleware" --> "routes" : next()
+"routes" -> "authMiddleware": authorizeAgent = async (req, res, next)
+note right
+  Verify agent,
+   if ok return next
+end note
+ "authMiddleware" --> "routes" : next()
+deactivate "authMiddleware"
+
+"routes" -> "LostItemController": getAllLostItems()
+activate "LostItemController"
+deactivate "routes"
+"LostItemController" -> "Database": find()
+activate "Database"
+"Database" --> "LostItemController" : res.status(200).json(items)
+[o<-- "LostItemController" : res.status(200).json(items)
+
+@enduml
