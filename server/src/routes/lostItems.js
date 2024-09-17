@@ -11,7 +11,7 @@ router.post('/api/lost-items', protect, authorizeAgent,LostItemController.create
 router.delete('/api/lost-items/:id', protect, authorizeAgent,LostItemController.deleteLostItem);
 
 // Route for passengers to search for lost items
-router.delete('/api/passenger-lost-items', protect, authorizePassenger, LostItemController.searchLostItems);
+router.get('/api/passenger-lost-items', protect, authorizePassenger, LostItemController.searchLostItems);
 
 
 

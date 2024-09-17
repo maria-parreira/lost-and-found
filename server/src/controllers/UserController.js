@@ -62,30 +62,6 @@ class AuthController {
     }
 
 
-    // GET /api/passenger-items
-    static async searchLostItems(req, res) {
-        try {
-            const { description, location, status } = req.query;
-
-            // Build the query object based on provided criteria
-            const query = {};
-            if (description) {
-                query.description = new RegExp(description, 'i');
-            }
-            if (location) {
-                query.location = new RegExp(location, 'i');
-            }
-            if (status) {
-                query.status = status;
-            }
-            const items = await LostItem.find(query);
-            res.status(200).json(items);
-        } catch (error) {
-            res.status(500).json({ error: 'Error searching for lost items' });
-        }
-    }
-
-
 }
 
 module.exports = AuthController;
