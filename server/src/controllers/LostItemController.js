@@ -13,7 +13,7 @@ class LostItemController {
     }
 
     // GET /api/lost-items/:id
-    static async getByItemById(req, res) {
+    static async getItemById(req, res) {
         try {
             const id = req.params.id;
             const item = await LostItem.findById(id);
@@ -49,6 +49,24 @@ class LostItemController {
             res.status(500).json({ error: 'Error creating the lost item' });
         }
     }
+
+    // DELETE /api/lost-items/:id
+    static async deleteLostItem(req, res) {
+        try {
+            const id = req.params.id;
+            const result = await LostItem.findByIdAndDelete(id);
+
+            if (!result) {
+                return res.status(404).json({ error: 'Lost item not found' });
+            }
+
+            res.status(200).json({ message: 'Lost item successfully deleted' });
+        } catch (error) {
+            res.status(500).json({ error: 'Error deleting the lost item' });
+        }
+    }
+
+
 }
 
 module.exports = LostItemController;
