@@ -19,8 +19,10 @@ Agents have the ability to list, create, and delete lost items,  while a passeng
 
 ## Authentication and Authorization
 
-- Authentication: Users (both agents and passengers) are authenticated using JSON Web Tokens (JWT). Upon registration or login, users receive a token that must be included in the Authorization header for secured endpoints.
-- Authorization: Agents are authorized to perform actions like listing, creating, and deleting lost items. Passengers are authorized only to search for lost items.
+- Authentication: Users (both agents and passengers) are authenticated using JSON Web Tokens (JWT). 
+- Upon registration or login, users receive a token that must be included in the Authorization header for secured endpoints.
+- Authorization: Agents are authorized to perform actions like listing, creating, and deleting lost items. 
+- Passengers are authorized only to search for lost items.
 
 ## How It Works
 
@@ -89,4 +91,13 @@ npm install
 npm start
 ```
 
+## Some of my Results
 
+You can see Documentation in Postman  [here](https://documenter.getpostman.com/view/34771271/2sAXqqcNSc)
+
+![Database JSON.png](images/Database JSON.png)
+![authError.png](images/authError.png)
+![delete.png](images/delete.png)
+![listItems.png](images/listItems.png)
+![loginAgent.png](images/loginAgent.png)
+![passengerSearch.png](images/passengerSearch.png)
