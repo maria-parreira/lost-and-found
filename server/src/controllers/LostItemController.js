@@ -1,9 +1,8 @@
 const LostItem = require('../models/LostItem');
 
-class LostItemController {
 
-    // GET /api/lost-items
-    static async getAllLostItems(req, res) {
+
+    async function getAllLostItems(req, res) {
         try {
             const items = await LostItem.find();
             res.status(200).json(items);
@@ -12,8 +11,8 @@ class LostItemController {
         }
     }
 
-    // GET /api/lost-items/:id
-    static async getItemById(req, res) {
+
+    async function getItemById(req, res) {
         try {
             const id = req.params.id;
             const item = await LostItem.findById(id);
@@ -28,8 +27,8 @@ class LostItemController {
         }
     }
 
-    // POST /api/lost-items
-    static async createLostItem(req, res) {
+
+    async function createLostItem(req, res) {
         try {
             const { description, foundDate, location, status } = req.body;
 
@@ -50,8 +49,8 @@ class LostItemController {
         }
     }
 
-    // DELETE /api/lost-items/:id
-    static async deleteLostItem(req, res) {
+
+    async function deleteLostItem(req, res) {
         try {
             const id = req.params.id;
             const result = await LostItem.findByIdAndDelete(id);
@@ -66,8 +65,8 @@ class LostItemController {
         }
     }
 
-    // GET /api/passenger-lost-items
-    static async searchLostItems(req, res) {
+
+    async function searchLostItems(req, res) {
         try {
             const { description, location, status } = req.query;
 
@@ -90,6 +89,6 @@ class LostItemController {
     }
 
 
-}
+
 
 module.exports = LostItemController;

@@ -1,7 +1,7 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 
-// generate token
+
 const generateToken = (user) => {
     return jwt.sign(
         { id: user._id, role: user.role },
@@ -10,9 +10,8 @@ const generateToken = (user) => {
     );
 };
 
-class AuthController {
 
-    static async register(req, res) {
+    async function register(req, res) {
         const { username, email, password, role } = req.body;
         try {
 
@@ -22,8 +21,6 @@ class AuthController {
             }
 
             const user = await User.create({ username, email, password, role });
-
-
             const token = generateToken(user);
             res.status(201).json({
                 _id: user._id,
@@ -38,13 +35,13 @@ class AuthController {
     }
 
 
-    static async login(req, res) {
-        const { email, password } = req.body;
+    async function login(req, res) {
+        const {email, password} = req.body;
         try {
 
-            const user = await User.findOne({ email });
+            const user = await User.findOne({email});
             if (user && (await user.matchPassword(password))) {
-                // Gera token JWT
+
                 const token = generateToken(user);
                 res.json({
                     _id: user._id,
@@ -54,14 +51,12 @@ class AuthController {
                     token
                 });
             } else {
-                res.status(401).json({ error: 'Invalid email or password' });
+                res.status(401).json({error: 'Invalid email or password'});
             }
         } catch (error) {
-            res.status(500).json({ error: 'Error logging in' });
+            res.status(500).json({error: 'Error logging in'});
         }
+
     }
-
-
-}
 
 module.exports = AuthController;
