@@ -1,10 +1,10 @@
 const request = require('supertest');
 const app = require('../../../app');
 
-// TEST FOR REGISTER METHOD
+
 describe('Users Routes', () => {
 
-    // create new agent , not an existent one
+
     describe('POST /api/users/register', () => {
         it('should register a new agent', async () => {
             const response = await request(app)
@@ -20,7 +20,7 @@ describe('Users Routes', () => {
             expect(response.body).toHaveProperty('token');
         });
 
-        //try to create agent that already exists
+
         it('should return 400 if agent already exists', async () => {
 
             await request(app)
@@ -47,10 +47,10 @@ describe('Users Routes', () => {
         });
     });
 
-    // TEST LOGIN METHOD
+
     describe('POST /api/users/login', () => {
 
-        // try to login an inexistent agent
+
         it('should log in an existing agent', async () => {
             await request(app)
                 .post('/api/users/register')
@@ -72,7 +72,7 @@ describe('Users Routes', () => {
             expect(response.body).toHaveProperty('token');
         });
 
-        // try login with invalid credentials
+
         it('should return 401 if login credentials are invalid', async () => {
             const response = await request(app)
                 .post('/api/users/login')

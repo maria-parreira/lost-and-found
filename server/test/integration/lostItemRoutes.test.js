@@ -1,7 +1,8 @@
 const request = require('supertest');
 const express = require('express');
 const app = require('../../../app');
-const LostItem = require('../../src/models/LostItem');
+const lostItem = require('../../src/models/LostItem');
+
 
 // Mocks para middleware de autenticação
 jest.mock('../../src/middleware/authMiddleware', () => ({
@@ -19,7 +20,7 @@ describe('LostItem Routes', () => {
 
     afterEach(async () => {
         // Limpar dados entre os testes
-        await LostItem.deleteMany({});
+        await lostItem.deleteMany({});
     });
 
     describe('GET /api/lost-items', () => {
