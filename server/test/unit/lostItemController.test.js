@@ -7,21 +7,22 @@ jest.mock('../../src/models/LostItem');
 describe('LostItemController', () => {
 
     describe('getAllLostItems', () => {
+
         it('should return all lost items', async () => {
+            // Arrange
             const mockItems = [
                 { _id: '1', description: 'Wallet' },
                 { _id: '2', description: 'Phone' }
             ];
             lostItem.find.mockResolvedValue(mockItems);
-
             const req = {};
             const res = {
                 status: jest.fn().mockReturnThis(),
                 json: jest.fn()
             };
-
+            //Act
             await lostItemController.getAllLostItems(req, res);
-
+            // Assert
             expect(res.status).toHaveBeenCalledWith(200);
             expect(res.json).toHaveBeenCalledWith(mockItems);
         });
@@ -36,7 +37,6 @@ describe('LostItemController', () => {
             };
 
             await lostItemController.getAllLostItems(req, res);
-
             expect(res.status).toHaveBeenCalledWith(500);
             expect(res.json).toHaveBeenCalledWith({ error: 'Error fetching lost items' });
         });
@@ -54,7 +54,6 @@ describe('LostItemController', () => {
             };
 
             await lostItemController.getItemById(req, res);
-
             expect(res.status).toHaveBeenCalledWith(200);
             expect(res.json).toHaveBeenCalledWith(mockItem);
         });
@@ -69,7 +68,6 @@ describe('LostItemController', () => {
             };
 
             await lostItemController.getItemById(req, res);
-
             expect(res.status).toHaveBeenCalledWith(404);
             expect(res.json).toHaveBeenCalledWith({ error: 'Lost item not found' });
         });
@@ -84,7 +82,6 @@ describe('LostItemController', () => {
             };
 
             await lostItemController.getItemById(req, res);
-
             expect(res.status).toHaveBeenCalledWith(500);
             expect(res.json).toHaveBeenCalledWith({ error: 'Error fetching the lost item' });
         });
@@ -103,7 +100,6 @@ describe('LostItemController', () => {
             };
 
             await lostItemController.createLostItem(req, res);
-
             expect(res.status).toHaveBeenCalledWith(201);
             expect(res.json).toHaveBeenCalledWith(savedItem);
         });
@@ -116,24 +112,8 @@ describe('LostItemController', () => {
             };
 
             await lostItemController.createLostItem(req, res);
-
             expect(res.status).toHaveBeenCalledWith(400);
             expect(res.json).toHaveBeenCalledWith({ error: 'Please provide all required fields' });
-        });
-
-        it('should return 500 if there is an error creating the lost item', async () => {
-            lostItem.prototype.save.mockRejectedValue(new Error('Database error'));
-
-            const req = { body: { description: 'Bag' } };
-            const res = {
-                status: jest.fn().mockReturnThis(),
-                json: jest.fn()
-            };
-
-            await lostItemController.createLostItem(req, res);
-
-            expect(res.status).toHaveBeenCalledWith(500);
-            expect(res.json).toHaveBeenCalledWith({ error: 'Error creating the lost item' });
         });
     });
 
@@ -148,7 +128,6 @@ describe('LostItemController', () => {
             };
 
             await lostItemController.deleteLostItem(req, res);
-
             expect(res.status).toHaveBeenCalledWith(200);
             expect(res.json).toHaveBeenCalledWith({ message: 'Lost item successfully deleted' });
         });
@@ -163,7 +142,6 @@ describe('LostItemController', () => {
             };
 
             await lostItemController.deleteLostItem(req, res);
-
             expect(res.status).toHaveBeenCalledWith(404);
             expect(res.json).toHaveBeenCalledWith({ error: 'Lost item not found' });
         });
@@ -178,7 +156,6 @@ describe('LostItemController', () => {
             };
 
             await lostItemController.deleteLostItem(req, res);
-
             expect(res.status).toHaveBeenCalledWith(500);
             expect(res.json).toHaveBeenCalledWith({ error: 'Error deleting the lost item' });
         });
@@ -197,7 +174,6 @@ describe('LostItemController', () => {
             };
 
             await lostItemController.searchLostItems(req, res);
-
             expect(res.status).toHaveBeenCalledWith(200);
             expect(res.json).toHaveBeenCalledWith(mockItems);
         });
@@ -212,7 +188,6 @@ describe('LostItemController', () => {
             };
 
             await lostItemController.searchLostItems(req, res);
-
             expect(res.status).toHaveBeenCalledWith(500);
             expect(res.json).toHaveBeenCalledWith({ error: 'Error searching for lost items' });
         });

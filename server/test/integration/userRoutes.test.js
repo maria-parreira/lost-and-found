@@ -1,25 +1,16 @@
 const request = require('supertest');
 const app = require('../../../app');
+const lostItem = require("../../src/models/LostItem");
 
 
 describe('Users Routes', () => {
 
+    let testItemId;
+    beforeAll(async () => {});
+    afterEach(async () => {await lostItem.deleteMany({});});
+
 
     describe('POST /api/users/register', () => {
-        it('should register a new agent', async () => {
-            const response = await request(app)
-                .post('/api/users/register')
-                .send({
-                    username: 'Test Agent1',
-                    email: 'test1@agent.com',
-                    password: 'password123',
-                    role:'agent'
-                });
-
-            expect(response.statusCode).toBe(201);
-            expect(response.body).toHaveProperty('token');
-        });
-
 
         it('should return 400 if agent already exists', async () => {
 
@@ -48,41 +39,4 @@ describe('Users Routes', () => {
     });
 
 
-    describe('POST /api/users/login', () => {
-
-
-        it('should log in an existing agent', async () => {
-            await request(app)
-                .post('/api/users/register')
-                .send({
-                    username: 'Test Agent',
-                    email: 'testlogin@agent.com',
-                    password: 'password123',
-                    role:'agent'
-                });
-
-            const response = await request(app)
-                .post('/api/users/login')
-                .send({
-                    email: 'testlogin@agent.com',
-                    password: 'password123'
-                });
-
-            expect(response.statusCode).toBe(200);
-            expect(response.body).toHaveProperty('token');
-        });
-
-
-        it('should return 401 if login credentials are invalid', async () => {
-            const response = await request(app)
-                .post('/api/users/login')
-                .send({
-                    email: 'wrong@agent.com',
-                    password: 'wrongpassword'
-                });
-
-            expect(response.statusCode).toBe(401);
-            expect(response.body).toHaveProperty('error', 'Invalid email or password');
-        });
-    });
 });

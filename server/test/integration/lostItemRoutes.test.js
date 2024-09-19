@@ -4,7 +4,6 @@ const app = require('../../../app');
 const lostItem = require('../../src/models/LostItem');
 
 
-// Mocks para middleware de autenticação
 jest.mock('../../src/middleware/authMiddleware', () => ({
     protect: (req, res, next) => next(), 
     authorizeAgent: (req, res, next) => next(),
@@ -12,20 +11,14 @@ jest.mock('../../src/middleware/authMiddleware', () => ({
 }));
 
 describe('LostItem Routes', () => {
-    let testItemId;
 
-    beforeAll(async () => {
-        // Configuração inicial se necessário
-    });
 
-    afterEach(async () => {
-        // Limpar dados entre os testes
-        await lostItem.deleteMany({});
-    });
+    beforeAll(async () => {});
+    afterEach(async () => {await lostItem.deleteMany({});});
 
     describe('GET /api/lost-items', () => {
         it('should return all lost items', async () => {
-            const newItem = new LostItem({
+            const newItem = new lostItem({
                 description: 'Wallet',
                 foundDate: '2024-09-18',
                 location: 'Park',
@@ -44,7 +37,7 @@ describe('LostItem Routes', () => {
 
     describe('GET /api/lost-items/:id', () => {
         it('should return a lost item by ID', async () => {
-            const newItem = new LostItem({
+            const newItem = new lostItem({
                 description: 'Phone',
                 foundDate: '2024-09-18',
                 location: 'Airport',
@@ -59,16 +52,7 @@ describe('LostItem Routes', () => {
 
             expect(response.body).toHaveProperty('description', 'Phone');
         });
-        /*
-        it('should return 404 if lost item not found by ID', async () => {
-            const response = await request(app)
-                .get('/api/lost-items/')
-                .expect(404);
 
-            expect(response.body).toHaveProperty('error', 'Lost item not found');
-        });
-
-         */
     });
 
     describe('POST /api/lost-items', () => {
@@ -102,7 +86,7 @@ describe('LostItem Routes', () => {
 
     describe('DELETE /api/lost-items/:id', () => {
         it('should delete a lost item by ID', async () => {
-            const newItem = new LostItem({
+            const newItem = new lostItem({
                 description: 'Keys',
                 foundDate: '2024-09-18',
                 location: 'Mall',
@@ -117,21 +101,11 @@ describe('LostItem Routes', () => {
 
             expect(response.body).toHaveProperty('message', 'Lost item successfully deleted');
         });
-/*
-        it('should return 404 if lost item not found for deletion', async () => {
-            const response = await request(app)
-                .delete('/api/lost-items/')
-                .expect(404);
-
-            expect(response.body).toHaveProperty('error', 'Lost item not found');
-        });
-
- */
     });
 
     describe('GET /api/passenger-lost-items', () => {
         it('should return lost items based on search criteria', async () => {
-            const newItem = new LostItem({
+            const newItem = new lostItem({
                 description: 'Backpack',
                 foundDate: '2024-09-18',
                 location: 'Station',
@@ -147,17 +121,5 @@ describe('LostItem Routes', () => {
             expect(response.body).toHaveLength(1);
             expect(response.body[0]).toHaveProperty('description', 'Backpack');
         });
-        /*
-        it('should return 500 if there is an error searching for lost items', async () => {
-
-            const response = await request(app)
-                .get('/api/passenger-lost-items')
-                .query({ description: 'Nonexistent' })
-                .expect(500);
-
-            expect(response.body).toHaveProperty('error', 'Error searching for lost items');
-        });
-
-         */
     });
 });
