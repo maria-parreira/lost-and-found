@@ -1,10 +1,10 @@
-const LostItem = require('../models/LostItem');
+const lostItem = require('../models/LostItem');
 
 
 
     async function getAllLostItems(req, res) {
         try {
-            const items = await LostItem.find();
+            const items = await lostItem.find();
             res.status(200).json(items);
         } catch (error) {
             res.status(500).json({ error: 'Error fetching lost items' });
@@ -15,7 +15,7 @@ const LostItem = require('../models/LostItem');
     async function getItemById(req, res) {
         try {
             const id = req.params.id;
-            const item = await LostItem.findById(id);
+            const item = await lostItem.findById(id);
 
             if (!item) {
                 return res.status(404).json({ error: 'Lost item not found' });
@@ -35,7 +35,7 @@ const LostItem = require('../models/LostItem');
             if (!description || !foundDate || !location || !status) {
                 return res.status(400).json({ error: 'Please provide all required fields' });
             }
-            const newItem = new LostItem({
+            const newItem = new lostItem({
                 description,
                 foundDate,
                 location,
@@ -53,7 +53,7 @@ const LostItem = require('../models/LostItem');
     async function deleteLostItem(req, res) {
         try {
             const id = req.params.id;
-            const result = await LostItem.findByIdAndDelete(id);
+            const result = await lostItem.findByIdAndDelete(id);
 
             if (!result) {
                 return res.status(404).json({ error: 'Lost item not found' });
@@ -81,7 +81,7 @@ const LostItem = require('../models/LostItem');
             if (status) {
                 query.status = status;
             }
-            const items = await LostItem.find(query);
+            const items = await lostItem.find(query);
             res.status(200).json(items);
         } catch (error) {
             res.status(500).json({ error: 'Error searching for lost items' });
@@ -91,4 +91,10 @@ const LostItem = require('../models/LostItem');
 
 
 
-module.exports = LostItemController;
+module.exports = {
+    getAllLostItems,
+    getItemById,
+    createLostItem,
+    deleteLostItem,
+    searchLostItems
+};
