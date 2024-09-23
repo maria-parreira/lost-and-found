@@ -1,58 +1,117 @@
-const userController = require('../../src/controllers/UserController');
-const user = require('../../src/models/User');
-jest.mock('../../src/models/User');
+const { register, login } = require('../../src/controllers/UserController');
+const User = require('../../src/models/User');
+const jwt = require('jsonwebtoken');
+const sinon = require('sinon');
 
-
-const generateToken = jest.fn();
-userController.generateToken = generateToken;
-
-describe('UserController', () => {
+describe('User Controller', () => {
 
     describe('register', () => {
-        it('should return 400 if user already exists', async () => {
-            user.findOne.mockResolvedValue({ email: 'existing@agent.com' });
 
-            const req = {
-                body: {
-                    username: 'Test',
-                    email: 'existing@agent.com',
-                    password: '123456',
-                    role: 'agent'
-                }
+
+        it('should register a new user', async () => {
+            //  Arrange
+            req.body = {
+                username: 'testuser',
+                email: 'test@example.com',
+                password: 'password123',
+                role: 'user'
+            };
+            
+            const mockUser = {
+                _id: '12345',
+                username: 'testuser',
+                email: 'test@example.com',
+                role: 'user'
             };
 
-            const res = {
-                status: jest.fn().mockReturnThis(),
-                json: jest.fn()
-            };
+            sandbox.stub(User, 'findOne').resolves(null); // Simula que o usuário não existe
+            sandbox.stub(User, 'create').resolves(mockUser); // Simula a criação do usuário
 
-            await userController.register(req, res);
+            await register(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(201);
+            expect(res.json).toHaveBeenCalledWith({
+                _id: '12345',
+                username: 'testuser',
+                email: 'test@example.com',
+                role: 'user'
+            });
+        });
+
+        it('should return an error if user already exists', async () => {
+            req.body = { email: 'test@example.com' };
+
+            sandbox.stub(User, 'findOne').resolves({ email: 'test@example.com' }); // Simula que o usuário já existe
+
+            await register(req, res);
 
             expect(res.status).toHaveBeenCalledWith(400);
             expect(res.json).toHaveBeenCalledWith({ error: 'User already exists' });
         });
+    });
 
-
-
-        it('should return 500 if there is an error during login', async () => {
-            user.findOne.mockRejectedValue(new Error('Database error'));
-
-            const req = {
-                body: {
-                    email: 'test@user.com',
-                    password: '123456'
-                }
+    describe('login', () => {
+        it('should login user and return token', async () => {
+            req.body = {
+                email: 'test@example.com',
+                password: 'password123'
             };
 
-            const res = {
-                status: jest.fn().mockReturnThis(),
-                json: jest.fn()
+            const mockUser = {
+                _id: '12345',
+                username: 'testuser',
+                email: 'test@example.com',
+                role: 'user',
+                matchPassword: jest.fn().mockResolvedValue(true) // Simula a comparação de senha
             };
 
-            await userController.login(req, res);
+            sandbox.stub(User, 'findOne').resolves(mockUser); // Simula que o usuário foi encontrado
 
-            expect(res.status).toHaveBeenCalledWith(500);
-            expect(res.json).toHaveBeenCalledWith({ error: 'Error logging in' });
+            const mockToken = 'mockedToken123';
+            sandbox.stub(jwt, 'sign').returns(mockToken); // Faz o mock do JWT
+
+            await login(req, res);
+
+            expect(res.json).toHaveBeenCalledWith({
+                _id: '12345',
+                username: 'testuser',
+                email: 'test@example.com',
+                role: 'user',
+                token: mockToken
+            });
+        });
+
+        it('should return error if password is incorrect', async () => {
+            req.body = {
+                email: 'test@example.com',
+                password: 'wrongpassword'
+            };
+
+            const mockUser = {
+                _id: '12345',
+                matchPassword: jest.fn().mockResolvedValue(false)
+            };
+
+            sandbox.stub(User, 'findOne').resolves(mockUser);
+
+            await login(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(401);
+            expect(res.json).toHaveBeenCalledWith({ error: 'Invalid email or password' });
+        });
+
+        it('should return error if user is not found', async () => {
+            req.body = {
+                email: 'nonexistent@example.com',
+                password: 'password123'
+            };
+
+            sandbox.stub(User, 'findOne').resolves(null); // Simula que o usuário não foi encontrado
+
+            await login(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(401);
+            expect(res.json).toHaveBeenCalledWith({ error: 'Invalid email or password' });
         });
     });
 });

@@ -70,7 +70,6 @@ const lostItem = require('../models/LostItem');
         try {
             const { description, location, status } = req.query;
 
-            // Build the query object based on provided criteria
             const query = {};
             if (description) {
                 query.description = new RegExp(description, 'i');
