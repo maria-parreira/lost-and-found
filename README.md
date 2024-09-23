@@ -39,8 +39,8 @@ Agents have the ability to list, create, and delete lost items,  while a passeng
 
 ### Endpoints:
 
-- POST /api/users/register : 
-- POST /api/users/login:
+- POST /api/users/register : Creates a user account
+- POST /api/users/login: Receives the user's credentials (typically username and password) and, if the information is valid, returns an authentication token or user information.
 - GET /api/lost-items : Lists all lost items (for agents).
 - GET /api/lost-items/:id : Look for a specific item by id.
 - POST /api/lost-items : Creates a new lost item (for agents).
