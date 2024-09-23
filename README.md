@@ -10,11 +10,13 @@ Agents have the ability to list, create, and delete lost items,  while a passeng
 ## Features
 
 ### Agent Functionalities:
+
 - List Lost Items: Agents can view all lost items in the system.
 - Create Lost Items: Agents can report new lost items by providing necessary details.
 - Delete Lost Items: Agents can remove items from the system that are no longer relevant.
 
 ### Passenger Functionalities:
+
 - Search Lost Items: Passengers can search for lost items using keywords such as description, brand, color, and lost time.
 
 ## Authentication and Authorization
@@ -27,15 +29,20 @@ Agents have the ability to list, create, and delete lost items,  while a passeng
 ## How It Works
 
 ### Registration and Login:
-- Users can register and log in to the system. Upon successful login, a JWT is issued which includes the user's role (agent or passenger).
+- Users (agents and passengers) can register and log in to the system. 
+- Upon successful login, a JWT is issued which includes the user's role (agent or passenger).
 
 ### Middleware:
+
 - Authentication middleware checks the validity of the JWT and retrieves the user information.
 - Authorization middleware ensures that users have the appropriate role to perform the requested action.
 
 ### Endpoints:
 
+- POST /api/users/register : 
+- POST /api/users/login:
 - GET /api/lost-items : Lists all lost items (for agents).
+- GET /api/lost-items/:id : Look for a specific item by id.
 - POST /api/lost-items : Creates a new lost item (for agents).
 - DELETE /api/lost-items/ : Deletes a lost item (for agents).
 
@@ -44,6 +51,8 @@ Agents have the ability to list, create, and delete lost items,  while a passeng
 - US1: as an agent, I want to list all lost items
 - US2: as an agent, I want to create a lost item
 - US3: as an agent, I want to find a particular item
+- US4: as a passanger, I want to look for my item
+- US5: as a agent, I want to delete a particular item
 
 
 ### Getting Started
